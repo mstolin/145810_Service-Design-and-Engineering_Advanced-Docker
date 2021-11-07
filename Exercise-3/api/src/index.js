@@ -31,7 +31,7 @@ function executeQuery(query) {
 
 // routes
 app.get('/books/all', function(_, response) {
-    let query = 'SELECT * from BOOKS';
+    let query = 'SELECT * from Books';
     executeQuery(query).then(data => {
         response.status(200).json(data[0])
     }).catch(error => {
@@ -40,7 +40,7 @@ app.get('/books/all', function(_, response) {
 });
 /*app.get('/books/:bookId', function(request, response) {
     let bookId = request.params.bookId;
-    let query = `SELECT * from BOOKS WHERE id = ${bookId}`;
+    let query = `SELECT * from Books WHERE id = ${bookId}`;
     executeQuery(query).then(data => {
         response.status(200).json(data[0])
     }).catch(error => {
