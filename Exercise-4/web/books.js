@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", _ => {
-  const url = "http://localhost:8080/books/all";
+  const url = "http://localhost:3000/books/all";
   const wrapper = document.getElementById('books');
   fetchBooks(url)
   .then(books => showBooks(books, wrapper))
