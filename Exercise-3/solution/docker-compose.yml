@@ -1,0 +1,42 @@
+version: "3"
+
+volumes:
+    mysql-volume:
+        name: mysql
+
+services:
+    mysql:
+        image: mysql:8
+        restart: always
+        volumes:
+            - mysql-volume:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=sde_test_db
+
+    phpmyadmin:
+        image: phpmyadmin:5
+        restart: always
+        env_file:
+            - phpmyadmin.env
+        depends_on:
+            - mysql
+        ports:
+            - 8000:80
+
+    api:
+        image: node:16-alpine
+        volumes:
+            - ./api:/usr/app
+        env_file:
+            - api-mysql.env
+        depends_on:
+            - mysql
+        ports:
+            - 8080:3000
+        command: >
+            /bin/sh -c
+            "npm install -g nodemon
+            && cd /usr/app
+            && npm install
+            && npm run dev"
